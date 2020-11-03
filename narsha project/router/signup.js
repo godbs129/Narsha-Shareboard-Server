@@ -5,15 +5,19 @@ const mysql = require('mysql');
 const pool = require('../dbcon');
 
 router.post('/signup', (req, res)=>{
+    console.log(req.body)
     pool.getConnection((err, connection)=>{
         if(err){
             console.log(err);
+            res.json({
+                result:"0"
+            })
         }else{
             const {userId, password} = req.body;
             console.log(userId, password);
             if(!userId || !password){
                 return res.status(400).json({
-                    error: '값을 입력해주세요'
+                    result: '0'
                 });
             }
             const user = {
@@ -26,7 +30,6 @@ router.post('/signup', (req, res)=>{
                     if(err) reject(err);
                     if(result.length != 0) reject(new Error ("2"));
                     resolve(user);
-                    
                 })
             })
             const insert = (user)=>{
@@ -36,6 +39,7 @@ router.post('/signup', (req, res)=>{
                         console.log(result);
                         resolve("1");
                     })
+                    connection.release()
                 })
                 return p;
             }
@@ -48,7 +52,7 @@ router.post('/signup', (req, res)=>{
             const onErr = (err)=>{
                 console.log(userId, '회원가입 실패');
                 res.status(403).json({
-                    error: err.message
+                    result:'0'
                 })
             }
 

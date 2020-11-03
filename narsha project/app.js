@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const signup = require('./router/signup');
+const signin = require('./router/signin');
 const mysql = require('./dbcon');
 
 app.use(express.json());
@@ -10,6 +11,6 @@ app.get('/', (req, res)=>{
         "hello"
     )
 })
-app.use(signup);
+app.use(signup, signin);
 
 module.exports = app;
