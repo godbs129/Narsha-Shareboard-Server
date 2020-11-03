@@ -13,20 +13,23 @@ router.post('/device', (req, res) => {
                 result: "0"
             })
         } else {
-            const { deviceName, deviceToken } = req.body;
-            console.log(deviceName, deviceToken);
-            if (!deviceName || !deviceToken) {
+            const { deviceName, deviceToken, userId, typeId } = req.body;
+            console.log(deviceName, deviceToken, userId, typeId);
+            if (!deviceName || !deviceToken || !userId || !typeId) {
                 return res.status(400).json({
                     result: "0"
                 })
             }
             const device = {
                 deviceName: deviceName,
-                deviceToken: deviceToken
+                deviceToken: deviceToken,
+                userId: userId,
+                typeId: typeId
             };
 
             const select = new Promise((resolve, reject) => {
                 connection.query(`Select * from device where deviceName = ?`, [deviceName], (err, result) => {
+                    console.log(result);
                     if (err) reject(err);
                     if (result.length != 0) reject(new Error("2"));
                     resolve(device);
@@ -35,7 +38,8 @@ router.post('/device', (req, res) => {
 
             const insert = (device) => {
                 const p = new Promise((resolve, reject) => {
-                    connection.query(`INSERT into device (deviceName, deviceToken) values (?,?)`, [device.deviceName, device.deviceToken], (err, result) => {
+                    connection.query(`INSERT into device (deviceName, deviceToken, userId, typeId) values (?,?,?,?)`, [device.deviceName, device.deviceToken, device.userId, device.typeId], (err, result) => {
+                        console.log(result);
                         if (err) reject(err);
                         console.log(result);
                         resolve("1");

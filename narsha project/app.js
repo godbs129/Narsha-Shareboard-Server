@@ -4,6 +4,7 @@ const signup = require('./router/signup');
 const signin = require('./router/signin');
 const autologin = require("./router/autoLogin");
 const device = require('./router/device');
+const device_inquiry = require('./router/device inquiry');
 const mysql = require('./dbcon');
 
 app.use(express.json());
@@ -13,6 +14,6 @@ app.get('/', (req, res) => {
         "hello"
     )
 })
-app.use(signup, signin, autologin, device);
+app.use(signup, signin, autologin, device, device_inquiry);
 
 module.exports = app;
