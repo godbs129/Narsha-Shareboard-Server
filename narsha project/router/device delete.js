@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const pool = require('../dbcon');
 const secret = "share board"
 
-router.get('/device', function (req, res, next) {
+router.delete('/device', function (req, res, next) {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(err);
@@ -26,12 +26,10 @@ router.get('/device', function (req, res, next) {
                 })
             })
             cheakSubjectAndPurpose = (decodedToken) => {
-                const p = new Promise((resolve, reject) => {
-                    const userId = decodedToken.sub;
-                    console.log(userId);
-                    resolve(userId);
-                })
-                return p;
+                const userId = decodedToken.sub;
+
+                console.log(userId);
+                return userId;
             }
             const clipboard = (userId) => {
                 const p = new Promise((resolve, reject) => {

@@ -33,7 +33,8 @@ router.post('/autologin', function(req, res, next) {
         .then((decodedToken)=>{
             req.decodedToken = decodedToken;
             res.json({
-                userName:req.decodedToken.sub
+                result:1,
+                userId:req.decodedToken.sub
             })
         })
         .catch(onError)
