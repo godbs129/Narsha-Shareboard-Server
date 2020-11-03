@@ -27,8 +27,10 @@ router.post('/device', (req, res) => {
                 typeId: typeId
             };
 
+
+
             const select = new Promise((resolve, reject) => {
-                connection.query(`Select * from device where deviceName = ?`, [deviceName], (err, result) => {
+                connection.query(`Select * from device where deviceName = ? and userId = ?`, [deviceName, userId], (err, result) => {
                     console.log(result);
                     if (err) reject(err);
                     if (result.length != 0) reject(new Error("2"));
@@ -42,17 +44,26 @@ router.post('/device', (req, res) => {
                         console.log(result);
                         if (err) reject(err);
                         console.log(result);
-                        resolve("1");
+                        resolve();
                     });
                     connection.release();
                 });
                 return p;
             }
 
-            const success = (message) => {
+            const sendId = new Promise((resolve, reject) => {
+                connection.query(`SELECT LAST_INSERT_ID`, (err, result) => {
+                    if (err) reject(err);
+                    resolve(result);
+                });
+                connection.release();
+            });
+
+            const success = (deviceId) => {
                 console.log(deviceName, '장치등록 성공');
                 res.json({
-                    result: "1"
+                    result: "1",
+                    deviceId: deviceId[0].LAST_INSERT_ID
                 });
             }
 
@@ -65,6 +76,7 @@ router.post('/device', (req, res) => {
 
             select
                 .then(insert)
+                .then(sendId)
                 .then(success)
                 .catch(onErr)
         }
