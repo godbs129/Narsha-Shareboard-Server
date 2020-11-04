@@ -11,11 +11,6 @@ const mysql = require('./dbcon');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.get('/', (req, res) => {
-    res.send(
-        "hello"
-    )
-})
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update);
 
 module.exports = app;
