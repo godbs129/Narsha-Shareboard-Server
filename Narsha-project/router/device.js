@@ -35,15 +35,15 @@ router.post('/device', (req, res) => {
 
             })*/
             const typeSelect =
-                 new Promise((resolve, reject) => {
-                    connection.query(`select * from deviceType where typeName = ?`,[device.typeName], (err, result)=>{
+                new Promise((resolve, reject) => {
+                    connection.query(`select * from deviceType where typeName = ?`, [device.typeName], (err, result) => {
                         console.log('bb');
                         if (err) reject(err);
                         console.log('b');
-                        if(result.length == 0){
+                        if (result.length == 0) {
                             reject(0);
                         }
-                        else{
+                        else {
                             resolve(result[0].typeId)
                         }
                     })
@@ -52,7 +52,7 @@ router.post('/device', (req, res) => {
 
 
 
-            const select = (typeId)=>{
+            const select = (typeId) => {
                 const p = new Promise((resolve, reject) => {
                     connection.query(`Select * from device where deviceName = ? and userId = ?`, [device.deviceName, device.userId], (err, result) => {
 
@@ -91,7 +91,7 @@ router.post('/device', (req, res) => {
             };*/
 
             const success = (deviceId) => {
-                console.log(deviceName, '장치등록 성공');
+                console.log(deviceId, '장치등록 성공');
                 res.json({
                     result: "1",
                     deviceId: deviceId
