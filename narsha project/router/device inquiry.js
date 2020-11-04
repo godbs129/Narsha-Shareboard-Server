@@ -43,6 +43,7 @@ router.get('/device', function (req, res, next) {
                             reject('값을 찾을 수 없습니다');
                         }
                     })
+                    connection.release();
                 })
                 return p;
             }
