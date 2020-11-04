@@ -27,29 +27,34 @@ router.post('/device', (req, res) => {
                 typeName: typeName
             };
             console.log(device);
-            const typeInsert = new Promise((resolve, reject)=>{
+            /*const typeInsert = new Promise((resolve, reject)=>{
                 connection.query(`insert into deviceType (typeName) values (?)`, device.typeName, (err, result)=>{
                     if(err) reject(err);
                     resolve(result.insertId);
                 })
 
-            })
-            /*const typeSelect = (message)=>{
-                const p = new Promise((resolve, reject) => {
-                    connection.query(`select LAST_INSERT_ID()`, (err, result)=>{
+            })*/
+            const typeSelect =
+                 new Promise((resolve, reject) => {
+                    connection.query(`select * from deviceType where typeName = ?`,[device.typeName], (err, result)=>{
                         console.log('bb');
                         if (err) reject(err);
                         console.log('b');
-                        resolve(result);
+                        if(result.length == 0){
+                            reject(0);
+                        }
+                        else{
+                            resolve(result[0].typeId)
+                        }
                     })
                 })
-                return p;
-            }*/
+
+
 
 
             const select = (typeId)=>{
                 const p = new Promise((resolve, reject) => {
-                    connection.query(`Select * from device where deviceName = ? and userId = ?`, [device.deviceName, userId], (err, result) => {
+                    connection.query(`Select * from device where deviceName = ? and userId = ?`, [device.deviceName, device.userId], (err, result) => {
 
                         if (err) reject(err);
                         if (result.length != 0) reject(new Error("2"));
@@ -99,11 +104,9 @@ router.post('/device', (req, res) => {
                     result: '0'
                 })
             }
-            typeInsert
-
+            typeSelect
                 .then(select)
                 .then(insert)
-                //.then(sendId)
                 .then(success)
                 .catch(onErr)
         }

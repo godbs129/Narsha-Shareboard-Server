@@ -6,6 +6,7 @@ const secret = "share board"
 
 router.delete('/device', function (req, res, next) {
     pool.getConnection((err, connection) => {
+        const deviceId = req.body.deviceId;
         if (err) {
             console.log(err);
             res.json({
@@ -27,16 +28,16 @@ router.delete('/device', function (req, res, next) {
             })
             cheakSubjectAndPurpose = (decodedToken) => {
                 const userId = decodedToken.sub;
-
                 console.log(userId);
                 return userId;
             }
-            const clipboard = (userId) => {
+            const select_device = (userId) => {
                 const p = new Promise((resolve, reject) => {
-                    connection.query('select * from device where userId = ?', [userId], (err, result) => {
+                    connection.query('select * from device where userId = ? and deviceId = ?', [userId, deviceId], (err, result) => {
                         if (err) reject(err);
+                        console.log(result[0]);
                         if (result.length != 0) {
-                            resolve(result);
+                            resolve(result[0]);
                         } else {
                             reject('값을 찾을 수 없습니다');
                         }
@@ -44,9 +45,19 @@ router.delete('/device', function (req, res, next) {
                 })
                 return p;
             }
-            const respond = (clipboard) => {
+            const delete_device = (device)=>{
+                const p = new Promise((resolve, reject) => {
+                    connection.query('delete from device where deviceId = ?', [device.deviceId], (err) => {
+                        if (err) reject(err);
+                        resolve(1)
+                    })
+                })
+                return p;
+            }
+
+            const respond = (result) => {
                 res.json({
-                    clipboard
+                    result:"1"
                 });
             }
             const onError = (err) => {
@@ -57,7 +68,8 @@ router.delete('/device', function (req, res, next) {
 
             cheakToken
                 .then(cheakSubjectAndPurpose)
-                .then(clipboard)
+                .then(select_device)
+                .then(delete_device)
                 .then(respond)
                 .catch(onError)
         }

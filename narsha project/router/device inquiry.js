@@ -33,7 +33,7 @@ router.get('/device', function (req, res, next) {
                 })
                 return p;
             }
-            const clipboard = (userId) => {
+            const device = (userId) => {
                 const p = new Promise((resolve, reject) => {
                     connection.query('select * from device where userId = ?', [userId], (err, result) => {
                         if (err) reject(err);
@@ -47,9 +47,9 @@ router.get('/device', function (req, res, next) {
                 })
                 return p;
             }
-            const respond = (clipboard) => {
+            const respond = (device) => {
                 res.json({
-                    clipboard
+                    device
                 });
             }
             const onError = (err) => {
@@ -60,7 +60,7 @@ router.get('/device', function (req, res, next) {
 
             cheakToken
                 .then(cheakSubjectAndPurpose)
-                .then(clipboard)
+                .then(device)
                 .then(respond)
                 .catch(onError)
         }
