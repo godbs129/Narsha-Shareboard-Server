@@ -22,6 +22,7 @@ router.post('/signin', (req, res) => {
                     else resolve(userId)
                 }
             })
+            connection.release()
         })
 
         const authrize = (userId) => {

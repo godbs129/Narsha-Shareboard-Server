@@ -20,12 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68edf664-5257-43ae-9387-e2959e6271d0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/router/device update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/dbcon.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/router/device delete.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/device delete.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/device inquiry.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/device inquiry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/device.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router/device update.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/device update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/router/signin.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604473057586</updated>
-      <workItem from="1604473058656" duration="5473000" />
+      <workItem from="1604473058656" duration="9697000" />
     </task>
     <servers />
   </component>
@@ -88,5 +87,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="932" y="201" key="FileChooserDialogImpl" timestamp="1604485630192">
+      <screen x="0" y="30" width="1536" height="834" />
+    </state>
+    <state x="932" y="201" key="FileChooserDialogImpl/0.30.1536.834@0.30.1536.834" timestamp="1604485630192" />
   </component>
 </project>

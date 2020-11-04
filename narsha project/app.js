@@ -6,6 +6,7 @@ const autologin = require("./router/autoLogin");
 const device = require('./router/device');
 const device_inquiry = require('./router/device inquiry');
 const device_delete = require("./router/device delete");
+const device_update = require('./router/device update');
 const mysql = require('./dbcon');
 
 app.use(express.json());
@@ -15,6 +16,6 @@ app.get('/', (req, res) => {
         "hello"
     )
 })
-app.use(signup, signin, autologin, device, device_inquiry, device_delete);
+app.use(signup, signin, autologin, device, device_inquiry, device_delete,device_update);
 
 module.exports = app;
