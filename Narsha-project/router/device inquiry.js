@@ -43,25 +43,34 @@ router.get('/device', function (req, res, next) {
                             reject('값을 찾을 수 없습니다');
                         }
                     })
-                    connection.release();
+                    
                 })
                 return p;
             }
             const device_Type = (device)=>{
                 const p = new Promise((resolve, reject)=>{
-                    for(let i = 0; i < device.length; i++){
-                        connection.query(`select typeName from deviceType where typeId = ?`, [device[i].typeId],(err, result)=>{
+                    
+                    console.log('length', device.length)
+                    let i = -1
+                    for(i = 0; i < device.length; i++){
+                        connection.query(`select * from deviceType where typeId = ?`, [device[i].typeId],(err, result)=>{
                             if(err)reject(err);
+                            console.log(result)
+                            console.log('aa',result[0].typeName);
+                            console.log(i)
                             device[i].typeName = result[0].typeName;
+                            console.log(device[i])
                         })
                     }
                     resolve(device)
                 })
+                
                 return p;
             }
-            const respond = (device) => {
+            const respond = (device) => {   
                 res.json({
-                    device
+                    device,
+                    typeName
                 });
             }
             const onError = (err) => {
@@ -73,6 +82,7 @@ router.get('/device', function (req, res, next) {
             cheakToken
                 .then(cheakSubjectAndPurpose)
                 .then(device)
+                .then(device_Type)
                 .then(respond)
                 .catch(onError)
         }
