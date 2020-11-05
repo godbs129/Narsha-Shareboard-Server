@@ -37,9 +37,7 @@ router.post('/device', (req, res) => {
             const typeSelect =
                 new Promise((resolve, reject) => {
                     connection.query(`select * from deviceType where typeName = ?`, [device.typeName], (err, result) => {
-                        console.log('bb');
                         if (err) reject(err);
-                        console.log('b');
                         if (result.length == 0) {
                             reject(0);
                         }
@@ -58,7 +56,7 @@ router.post('/device', (req, res) => {
 
                         if (err) reject(err);
                         if (result.length != 0) reject(new Error("2"));
-
+                        console.log(result);
                         resolve(typeId);
                     })
 

@@ -3,7 +3,6 @@ const { resolve } = require('path');
 const router = express.router();
 const pool = require('../dbcon');
 const moment = require('moment');
-const { query } = require('express');
 const now = moment();
 
 router.post('/clipboard', (req, res) => {
@@ -15,7 +14,7 @@ router.post('/clipboard', (req, res) => {
                 result: "0"
             })
         } else {
-            const { deviceId, board } = req.body;
+            const { deviceId, board, date } = req.body;
             console.log(deviceId, board);
             if (!deviceId || !board) {
                 return res.status(400).json({
@@ -28,7 +27,7 @@ router.post('/clipboard', (req, res) => {
             };
             console.log(deviceId);
 
-            function formatDate(date) {
+            /*function formatDate(date) {
                 return moment(date).format('YYYY-MM-DD HH:mm:ss');
             }
 
@@ -43,7 +42,7 @@ router.post('/clipboard', (req, res) => {
 
                     console.log(rows);
                 })
-            });
+            });*/
 
             const boardSelect = new Promise((resolve, reject) => {
                 connection.query(`select * from clipboard where board= ?`, [clipboard.board], (err, result) => {
@@ -54,29 +53,37 @@ router.post('/clipboard', (req, res) => {
                 })
             });
 
-            const select = (deviceId) => {
-                const p = new Promise((resolve, reject) => {
-                    connection.query(`select * from clipboard where deviceId = ?`, [clipboard.deviceId], (err, result) => {
-                        if (err) reject(err);
-                        if (result.length != 0) reject(new Error("2"));
-
-                        resolve(deviceId);
-                    })
-                })
-                return p;
-            };
 
             const insert = (deviceId) => {
                 console.log(deviceId);
                 const p = new Promise((resolve, reject) => {
-                    connection.query(`insert into clipboard (deviceId, board, date) values (?,?,?)`, [clipboard.deviceId, clipboard.board, clipboard.date], (err, result) => {
+                    connection.query(`insert into clipboard (deviceId, board, date) values (?,?,now())`, [clipboard.deviceId, clipboard.board, clipboard.date], (err, result) => {
                         if (err) reject(err);
                         console.log(result);
                         resolve(result.insertBoard);
                     });
                     connection.release();
                 })
+                return p;
             }
+            const success = (message) => {
+                console.log(boardId, '클립보드 전송 성공');
+                res.json({
+                    result: "1"
+                })
+            }
+            const onErr = (err) => {
+                console.log(userId, '클립보드 전송 실패');
+                res.status(403).json({
+                    result: '0'
+                })
+            }
+
+
         }
+
     })
+
 })
+
+module.exports = router;
