@@ -1,6 +1,6 @@
 const express = require('express');
 const { resolve } = require('path');
-const router = require('mysql');
+const router = express.router();
 const pool = require('../dbcon');
 const moment = require('moment');
 const { query } = require('express');
