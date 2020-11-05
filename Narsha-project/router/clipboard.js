@@ -1,9 +1,7 @@
 const express = require('express');
 const { resolve } = require('path');
-const router = express.router();
+const router = express.Router();
 const pool = require('../dbcon');
-const moment = require('moment');
-const now = moment();
 
 router.post('/clipboard', (req, res) => {
 
@@ -66,19 +64,23 @@ router.post('/clipboard', (req, res) => {
                 })
                 return p;
             }
-            const success = (message) => {
+            const success = (boardId) => {
                 console.log(boardId, '클립보드 전송 성공');
                 res.json({
-                    result: "1"
+                    result: "1",
+                    boardId: boardId
                 })
             }
             const onErr = (err) => {
-                console.log(userId, '클립보드 전송 실패');
+                console.log(err, '클립보드 전송 실패');
                 res.status(403).json({
                     result: '0'
                 })
             }
-
+            boardSelect
+                .then(insert)
+                .then(success)
+                .catch(onErr)
 
         }
 
