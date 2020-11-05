@@ -49,9 +49,13 @@ router.get('/device', function (req, res, next) {
             }
             const device_Type = (device)=>{
                 const p = new Promise((resolve, reject)=>{
-                    connection.query(`select typeName from deviceType where typeId = ?`, [device.typeId],(err, result)=>{
-                        
-                    })
+                    for(let i = 0; i < device.length; i++){
+                        connection.query(`select typeName from deviceType where typeId = ?`, [device[i].typeId],(err, result)=>{
+                            if(err)reject(err);
+                            device[i].typeName = result[0].typeName;
+                        })
+                    }
+                    resolve(device)
                 })
             }
             const respond = (device) => {
