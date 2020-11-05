@@ -57,6 +57,7 @@ router.get('/device', function (req, res, next) {
                     }
                     resolve(device)
                 })
+                return p;
             }
             const respond = (device) => {
                 res.json({
