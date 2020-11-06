@@ -72,7 +72,7 @@ router.post('/device', (req, res) => {
                         console.log(result);
                         resolve(result.insertId);
                     });
-                    connection.release();
+                    connection.release(result);
                 });
                 return p;
             }

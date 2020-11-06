@@ -1,4 +1,3 @@
-//오류..... 하...... 
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
@@ -36,7 +35,7 @@ router.get('/device', function (req, res, next) {
             }
             const device = (userId) => {
                 const p = new Promise((resolve, reject) => {
-                    connection.query('select * from device where userId = ?', [userId], (err, result) => {
+                    connection.query('select d.* t.typeName from device as d inner join deviecType as t where userId = ?', [userId], (err, result) => {
                         if (err) reject(err);
                         if (result.length != 0) {
                             resolve(result);
@@ -48,18 +47,17 @@ router.get('/device', function (req, res, next) {
                 })
                 return p;
             }
-            const device_Type = (device)=>{
+            /*const device_Type = (device)=>{
                 const p = new Promise((resolve, reject)=>{
                     
                     console.log('length', device.length)
                     let i = -1
                     for(i = 0; i < device.length; i++){
-                        connection.query(`select * from deviceType where typeId = ?`, [device[i].typeId],(err, result)=>{
+                        connection.query(`select typeName from deviceType where typeId = ?`, [device[i].typeId],(err, result)=>{
                             if(err)reject(err);
-                            console.log(result)
-                            console.log('aa',result[0].typeName);
+                            console.log(result[0].typeName);
                             console.log(i)
-                            device[i].typeName = result[0].typeName;
+                            device[i].typeName += result[0].typeName;
                             console.log(device[i])
                         })
                     }
@@ -67,11 +65,10 @@ router.get('/device', function (req, res, next) {
                 })
                 
                 return p;
-            }
+            }*/
             const respond = (device) => {   
                 res.json({
-                    device,
-                    typeName
+                    device
                 });
             }
             const onError = (err) => {
@@ -83,7 +80,7 @@ router.get('/device', function (req, res, next) {
             cheakToken
                 .then(cheakSubjectAndPurpose)
                 .then(device)
-                .then(device_Type)
+                //.then(device_Type)
                 .then(respond)
                 .catch(onError)
         }
