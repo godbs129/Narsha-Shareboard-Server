@@ -56,8 +56,11 @@ router.post('/device', (req, res) => {
 
                         if (err) reject(err);
                         if (result.length != 0) reject(new Error("2"));
-                        console.log(result);
-                        resolve(typeId);
+                        else {
+                            console.log(result);
+                            resolve(typeId);
+                        }
+
                     })
 
                 })
@@ -69,10 +72,10 @@ router.post('/device', (req, res) => {
                 const p = new Promise((resolve, reject) => {
                     connection.query(`INSERT into device (deviceName, deviceToken, userId, typeId) values (?,?,?,?)`, [device.deviceName, device.deviceToken, device.userId, typeId], (err, result) => {
                         if (err) reject(err);
-                        console.log(result);
+                        console.log('aaa', result);
                         resolve(result.insertId);
                     });
-                    connection.release(result);
+                    connection.release();
                 });
                 return p;
             }

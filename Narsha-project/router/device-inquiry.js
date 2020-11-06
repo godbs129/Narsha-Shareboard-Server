@@ -35,15 +35,16 @@ router.get('/device', function (req, res, next) {
             }
             const device = (userId) => {
                 const p = new Promise((resolve, reject) => {
-                    connection.query('select d.* t.typeName from device as d inner join deviecType as t where userId = ?', [userId], (err, result) => {
+                    connection.query('select d.*, t.typeName from device as d join deviceType as t where d.userId = ?', [userId], (err, result) => {
                         if (err) reject(err);
+                        console.log(result);
                         if (result.length != 0) {
                             resolve(result);
                         } else {
                             reject('값을 찾을 수 없습니다');
                         }
                     })
-                    
+
                 })
                 return p;
             }
@@ -66,7 +67,7 @@ router.get('/device', function (req, res, next) {
                 
                 return p;
             }*/
-            const respond = (device) => {   
+            const respond = (device) => {
                 res.json({
                     device
                 });
