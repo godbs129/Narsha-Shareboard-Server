@@ -27,7 +27,7 @@ router.get('/clipboard', (req, res) => {
             const p = new Promise((resolve, reject) => {
                 connection.query(`select c.board, c.deviceId, c.date, d.deviceName, d.userId, d.typeId from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ?`, [userId], (err, result) => {
                     if (err) reject(err);
-                    if (result.length == 0) reject(new Errror("값이 없습니다"));
+                    if (result.length == 0) reject(new Error("값이 없습니다"));
                     console.log(result);
                     resolve(result);
                 })

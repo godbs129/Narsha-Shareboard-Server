@@ -4,12 +4,13 @@ const pool = require('../dbcon');
 
 router.put('/device/:deviceId', (req, res) => {
     const { deviceName, deviceToken } = req.body;
-    const deviceId = req.params.deviceId;
+    const deviceId = Number(req.params.deviceId);
     const device = {
         deviceId: deviceId,
         deviceName: deviceName,
         deviceToken: deviceToken
     }
+    console.log(device);
     if (!deviceName, !deviceId, !deviceToken) {
         res.json({
             error: "값이 비었습니다."
@@ -22,8 +23,9 @@ router.put('/device/:deviceId', (req, res) => {
             })
         }
         const deviceselect = new Promise((resolve, reject) => {
-            connection.query(`select * from device where deviceId = ? and deviceToken = ?`, [deviceId, deviceToken], (err, result) => {
+            connection.query(`select * from device where deviceId = ? and deviceToken = ?`, [device.deviceId, device.deviceToken], (err, result) => {
                 if (err) reject(err);
+                console.log(result);
                 if (result.length == 0) reject(new Error("디바이스를 못 찾았습니다"))
                 resolve(device)
             })
