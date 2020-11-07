@@ -35,11 +35,7 @@ router.get('/device', function (req, res, next) {
             }
             const device = (userId) => {
                 const p = new Promise((resolve, reject) => {
-<<<<<<< HEAD
                     connection.query('select d.*, t.typeName from device as d inner join deviecType as t where userId = ?', [userId], (err, result) => {
-=======
-                    connection.query('select d.*, t.typeName from device as d join deviceType as t where d.userId = ?', [userId], (err, result) => {
->>>>>>> 241afb792612a29b64cc05ffc78bdfa2f25c1311
                         if (err) reject(err);
                         console.log(result);
                         if (result.length != 0) {
@@ -52,7 +48,7 @@ router.get('/device', function (req, res, next) {
                 })
                 return p;
             }
-            
+
             /*const device_Type = (device)=>{
                 const p = new Promise((resolve, reject)=>{
                     
