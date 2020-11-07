@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 const con = mysql.createPool({
     host: 'localhost',
-    database: 'shareboard',
+    database: 'narsha',
     user: 'root',
     password: 'jhy040129',
     connectionLimit: 30,
