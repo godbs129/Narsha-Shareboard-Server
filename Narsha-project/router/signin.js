@@ -27,7 +27,7 @@ router.post('/signin', (req, res) => {
         const authrize = (userId) => {
             console.log('user = ', userId)
             const p = new Promise((resolve, reject) => {
-                let extime = Math.floor(Date.now() / 1000) + (60 * 60)
+                let extime = Math.floor(Date.now() / 1000) + (30*24*60 * 60)
                 jwt.sign({
                     sub: userId,
                     iat: Math.floor(Date.now() / 1000),
