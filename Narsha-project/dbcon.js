@@ -5,7 +5,8 @@ const con = mysql.createPool({
     database: 'narsha',
     user: 'root',
     password: 'jhy040129',
-    connectionLimit: 30
+    connectionLimit: 30,
+    dateStrings: 'date'
 });
 
 module.exports = con;
