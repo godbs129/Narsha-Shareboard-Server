@@ -52,6 +52,7 @@ router.delete('/device', function (req, res, next) {
                         resolve(1)
                     })
                 })
+                connection.release()
                 return p;
             }
 

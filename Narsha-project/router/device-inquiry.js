@@ -46,6 +46,7 @@ router.get('/device', function (req, res, next) {
                     })
 
                 })
+                connection.release()
                 return p;
             }
 

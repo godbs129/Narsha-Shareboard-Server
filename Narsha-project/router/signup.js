@@ -39,8 +39,8 @@ router.post('/signup', (req, res) => {
                         console.log(result);
                         resolve("1");
                     })
-                    connection.release()
                 })
+                connection.release()
                 return p;
             }
             const success = (message) => {

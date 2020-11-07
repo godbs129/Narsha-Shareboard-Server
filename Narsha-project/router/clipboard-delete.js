@@ -55,6 +55,8 @@ router.delete('/clipboard', (req, res)=>{
                     }
                 })
             })
+            return p
+            connection.release()
         }
         const resopond = (result)=>{
             console.log(result);
