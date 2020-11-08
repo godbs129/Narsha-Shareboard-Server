@@ -66,6 +66,5 @@ router.get('/clipboard/:board', (req, res)=>{
             .then(respond)
             .catch(onError)
     })
-    
-
 })
+module.exports = router;

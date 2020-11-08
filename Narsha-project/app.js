@@ -13,10 +13,11 @@ const device_update = require("./router/device-update");
 const clipboard = require('./router/clipboard');
 const clipboard_inquiry = require('./router/clipboard-inquiry');
 const clipboard_delete = require('./router/clipboard-delete');
+const clipboard_select = require('./router/clipboard-select')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update,
-        clipboard, clipboard_inquiry, clipboard_delete);
+        clipboard, clipboard_inquiry, clipboard_delete, clipboard-select);
 
 module.exports = app;
