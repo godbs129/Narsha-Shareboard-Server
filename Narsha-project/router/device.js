@@ -69,7 +69,8 @@ router.post('/device', (req, res) => {
             const insert = (typeId) => {
                 console.log(typeId)
                 const p = new Promise((resolve, reject) => {
-                    connection.query(`INSERT into device (deviceName, deviceToken, userId, typeId) values (?,?,?,?)`, [device.deviceName, device.deviceToken, device.userId, typeId], (err, result) => {
+                    connection.query(`INSERT into device (deviceName, deviceToken, userId, typeId) values (?,?,?,?)`,
+                                     [device.deviceName, device.deviceToken, device.userId, typeId], (err, result) => {
                         if (err) reject(err);
                         console.log('aaa', result);
                         resolve(result.insertId);
