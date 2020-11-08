@@ -6,7 +6,9 @@ const secret = "share board"
 
 router.delete('/device', function (req, res, next) {
     pool.getConnection((err, connection) => {
+
         const deviceId = req.body.deviceId;
+
         if (err) {
             console.log(err);
             res.json({
@@ -14,11 +16,13 @@ router.delete('/device', function (req, res, next) {
             })
         } else {
             const token = req.headers.authorization// || req.query.token
+
             if (!token) {
                 return res.status(403).json({
                     error: 'No Token'
                 })
             }
+
             const cheakToken = new Promise((resolve, reject) => {
                 jwt.verify(token, secret, (err, decondedToken) => {
                     if (err) reject(err);
@@ -26,11 +30,13 @@ router.delete('/device', function (req, res, next) {
                     resolve(decondedToken)
                 })
             })
+
             const cheakSubjectAndPurpose = (decodedToken) => {
                 const userId = decodedToken.sub;
                 console.log(userId);
                 return userId;
             }
+
             const select_device = (userId) => {
                 const p = new Promise((resolve, reject) => {
                     connection.query('select * from device where userId = ? and deviceId = ?', [userId, deviceId], (err, result) => {
@@ -45,6 +51,7 @@ router.delete('/device', function (req, res, next) {
                 })
                 return p;
             }
+
             const delete_device = (device)=>{
                 const p = new Promise((resolve, reject) => {
                     connection.query('delete from device where deviceId = ?', [device.deviceId], (err) => {
@@ -57,12 +64,13 @@ router.delete('/device', function (req, res, next) {
             }
 
             const respond = (result) => {
-                res.json({
+                return res.statuse(200).json({
                     result:"1"
                 });
             }
+
             const onError = (err) => {
-                res.status(403).json({
+                return res.status(403).json({
                     error: err.message
                 })
             }

@@ -12,14 +12,17 @@ router.delete('/clipboard', (req, res) => {
                 error: err.message
             })
         }
+
         const token = req.headers.authorization;
         const boardId = req.body.boardId;
+
         if (!token) {
             console.log("can`t found token");
             res.json({
                 result: 0
             })
         }
+
         const checktoken = new Promise((resolve, reject) => {
             jwt.verify(token, secrit, (err, decodedToken) => {
                 if (err) reject(err);
@@ -27,14 +30,17 @@ router.delete('/clipboard', (req, res) => {
                 resolve(decodedToken);
             })
         })
+
         const cheaksubject = (decodedToken) => {
             const clipboard = { userId: decodedToken.sub, boardId: boardId };
             console.log("userId = ", clipboard.userId);
             return clipboard;
         }
+
         const boardselect = (clipboard) => {
             const p = new Promise((resolve, reject) => {
-                connection.query(`select c.boardId from clipboard as c join device as d where c.boardId = ? and d.userId = ?`, [clipboard.boardId, clipboard.userId], (err, result) => {
+                connection.query(`select c.boardId from clipboard as c join device as d where c.boardId = ? and d.userId = ?`,
+                 [clipboard.boardId, clipboard.userId], (err, result) => {
                     if (err) reject(err);
                     if (result.length == 0) reject(new Error("그런거 없어요"));
                     else {
@@ -44,6 +50,7 @@ router.delete('/clipboard', (req, res) => {
             })
             return p;
         }
+
         const boarddelete = (boardId) => {
             const p = new Promise((resolve, reject) => {
                 connection.query(`delete from clipboard where boardId = ?`, [boardId], (err, result) => {
@@ -58,18 +65,21 @@ router.delete('/clipboard', (req, res) => {
             return p
             connection.release()
         }
+
         const resopond = (result) => {
             console.log(result);
-            res.json({
+            return res.statuse(200).json({
                 result: result
             })
         }
+
         const onError = (err) => {
             console.log(err);
-            res.status(403).json({
+            return res.status(403).json({
                 error: err.message
             })
         }
+
         checktoken
             .then(cheaksubject)
             .then(boardselect)

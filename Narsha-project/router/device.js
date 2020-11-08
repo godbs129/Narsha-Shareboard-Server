@@ -15,17 +15,20 @@ router.post('/device', (req, res) => {
         } else {
             const { deviceName, deviceToken, userId, typeName } = req.body;
             console.log(deviceName, deviceToken, userId, typeName);
+
             if (!deviceName || !deviceToken || !userId || !typeName) {
                 return res.status(400).json({
                     result: "0"
                 })
             }
+
             const device = {
                 deviceName: deviceName,
                 deviceToken: deviceToken,
                 userId: userId,
                 typeName: typeName
             };
+
             console.log(device);
             /*const typeInsert = new Promise((resolve, reject)=>{
                 connection.query(`insert into deviceType (typeName) values (?)`, device.typeName, (err, result)=>{
@@ -34,8 +37,7 @@ router.post('/device', (req, res) => {
                 })
 
             })*/
-            const typeSelect =
-                new Promise((resolve, reject) => {
+            const typeSelect = new Promise((resolve, reject) => {
                     connection.query(`select * from deviceType where typeName = ?`, [device.typeName], (err, result) => {
                         if (err) reject(err);
                         if (result.length == 0) {
@@ -46,9 +48,6 @@ router.post('/device', (req, res) => {
                         }
                     })
                 })
-
-
-
 
             const select = (typeId) => {
                 const p = new Promise((resolve, reject) => {
@@ -93,7 +92,7 @@ router.post('/device', (req, res) => {
 
             const success = (deviceId) => {
                 console.log(deviceId, '장치등록 성공');
-                res.json({
+                return res.statuse(200).json({
                     result: "1",
                     deviceId: deviceId
                 });
@@ -105,6 +104,7 @@ router.post('/device', (req, res) => {
                     result: '0'
                 })
             }
+
             typeSelect
                 .then(select)
                 .then(insert)

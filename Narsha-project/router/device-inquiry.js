@@ -13,11 +13,13 @@ router.get('/device', function (req, res, next) {
             })
         } else {
             const token = req.headers.authorization// || req.query.token
+
             if (!token) {
                 return res.status(403).json({
                     error: 'No Token'
                 })
             }
+
             const cheakToken = new Promise((resolve, reject) => {
                 jwt.verify(token, secret, (err, decondedToken) => {
                     if (err) reject(err);
@@ -25,6 +27,7 @@ router.get('/device', function (req, res, next) {
                     resolve(decondedToken)
                 })
             })
+
             cheakSubjectAndPurpose = (decodedToken) => {
                 const p = new Promise((resolve, reject) => {
                     const userId = decodedToken.sub;
@@ -33,6 +36,7 @@ router.get('/device', function (req, res, next) {
                 })
                 return p;
             }
+
             const device = (userId) => {
                 const p = new Promise((resolve, reject) => {
                     connection.query('select d.*, t.typeName from device as d inner join deviecType as t where userId = ?', [userId], (err, result) => {
@@ -44,7 +48,6 @@ router.get('/device', function (req, res, next) {
                             reject('값을 찾을 수 없습니다');
                         }
                     })
-
                 })
                 connection.release()
                 return p;
@@ -70,12 +73,13 @@ router.get('/device', function (req, res, next) {
                 return p;
             }*/
             const respond = (device) => {
-                res.json({
+                return res.statuse(200).json({
                     device
                 });
             }
+
             const onError = (err) => {
-                res.status(403).json({
+                return res.status(403).json({
                     error: err.message
                 })
             }

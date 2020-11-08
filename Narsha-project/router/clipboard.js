@@ -66,14 +66,14 @@ router.post('/clipboard', (req, res) => {
             }
             const success = (boardId) => {
                 console.log(boardId, '클립보드 전송 성공');
-                res.json({
+                return res.statuse(200).json({
                     result: "1",
                     boardId: boardId
                 })
             }
             const onErr = (err) => {
                 console.log(err, '클립보드 전송 실패');
-                res.status(403).json({
+                return res.status(403).json({
                     result: '0'
                 })
             }

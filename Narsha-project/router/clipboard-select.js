@@ -6,14 +6,17 @@ const pool = require('../')
 
 router.get('/clipboard/:board', (req, res)=>{
     pool.getConnection((err, connection)=>{
+
         const token = req.headers.authorization;
         const board = req.params.board;
+
         if(!token){
             console.log('No Token');
             req.status(400).json({
                 result:"No token"
             });
         }
+
         const checkToken = new Promise((resolve, request)=>{
             jwt.verify(token, secret, (err, decodedToken)=>{
                 if(err)reject(err);
@@ -21,11 +24,13 @@ router.get('/clipboard/:board', (req, res)=>{
                 resolve(decodedToken);
             })
         })
+
         const checksubject = (decodedToken)=>{
             const userId = decodedToken.sub;
             console.log(userId);
             return userId;
         }
+
         const selectboard = (userId)=>{
             const p = new Promise((resolve, reject)=>{
                 connection.query(`select c.boardId, c.board, c.deviceId, c.date, d.deviceName, d.userId, d.typeId from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ? and c.board like = ?`, [userId, '%'+board+'%'], (err, result)=>{
@@ -42,22 +47,24 @@ router.get('/clipboard/:board', (req, res)=>{
             })
             return p;
         }
+
         const respond = (result)=>{
-            res.status(200).json({
+            return res.status(200).json({
                 result
             })
         }
+
         const onError = (err)=>{
-            res.statuse(403).json({
+            return res.statuse(403).json({
                 error:err.message
             })
         }
 
         checkToken
-        .then(checksubject)
-        .then(selectboard)
-        .then(respond)
-        .catch(onError)
+            .then(checksubject)
+            .then(selectboard)
+            .then(respond)
+            .catch(onError)
     })
     
 

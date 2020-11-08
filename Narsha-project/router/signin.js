@@ -43,14 +43,14 @@ router.post('/signin', (req, res) => {
         }
         const response = (token) => {
             console.log('auth done');
-            res.json({
+            return res.statuse(200).json({
                 result: "1",
                 token
             })
         }
         const onError = (err) => {
             console.log('signin Error')
-            res.status(403).json({
+            return res.status(403).json({
                 result: 0
             })
         }

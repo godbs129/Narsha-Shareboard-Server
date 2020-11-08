@@ -11,6 +11,7 @@ router.get('/clipboard', (req, res) => {
         if (!token) return res.status(403).json({
             error: "No Token"
         })
+
         const cheakToken = new Promise((resolve, reject) => {
             jwt.verify(token, secret, (err, decodeToken) => {
                 if (err) reject(err);
@@ -18,14 +19,18 @@ router.get('/clipboard', (req, res) => {
                 resolve(decodeToken);
             })
         })
+
         const cheaksubject = (decodedToken) => {
             const userId = decodedToken.sub;
             console.log(userId);
             return userId;
         }
+
         const select_clipboard = (userId) => {
             const p = new Promise((resolve, reject) => {
-                connection.query(`select c.boardId,c.board c.deviceId, c.date, d.deviceName, d.userId, d.typeId from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ?`, [userId], (err, result) => {
+                connection.query(`select c.boardId,c.board c.deviceId, c.date, d.deviceName, d.userId, d.typeId`+
+                ` from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ?`,
+                 [userId], (err, result) => {
                     if (err) reject(err);
                     if (result.length == 0) reject(new Error("값이 없습니다"));
                     console.log(result);
@@ -34,6 +39,7 @@ router.get('/clipboard', (req, res) => {
             })
             return p
         }
+
         const select_deviceType = (clipboard) => {
             const p = new Promise((resolve, reject) => {
                 for (let i = 0; i < clipboard.length; i++) {
@@ -49,13 +55,13 @@ router.get('/clipboard', (req, res) => {
         }
 
         const respond = (result) => {
-            res.json({
+            return res.statuse(200).json({
                 result
             })
         }
 
         const onError = (err) => {
-            res.status(403).json({
+            return res.status(403).json({
                 error: err.message
             })
         }

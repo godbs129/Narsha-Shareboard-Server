@@ -22,7 +22,7 @@ router.post('/autologin', function (req, res, next) {
         return decodedToken
     }
     const onError = (err) => {
-        res.status(403).json({
+        return res.status(403).json({
             error: err.message
         })
     }
@@ -31,7 +31,7 @@ router.post('/autologin', function (req, res, next) {
         .then(cheakSubjectAndPurpose)
         .then((decodedToken) => {
             req.decodedToken = decodedToken;
-            res.json({
+            return res.statuse(200).json({
                 result: 1,
                 userId: req.decodedToken.sub
             })

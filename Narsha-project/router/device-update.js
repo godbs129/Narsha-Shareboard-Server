@@ -10,18 +10,23 @@ router.put('/device/:deviceId', (req, res) => {
         deviceName: deviceName,
         deviceToken: deviceToken
     }
+
     console.log(device);
+
     if (!deviceName, !deviceId, !deviceToken) {
         res.json({
             error: "값이 비었습니다."
         })
     }
+
     pool.getConnection((err, connection) => {
+
         if (err) {
             res.status(400).json({
                 error: err.message
             })
         }
+
         const deviceselect = new Promise((resolve, reject) => {
             connection.query(`select * from device where deviceId = ? and deviceToken = ?`, [device.deviceId, device.deviceToken], (err, result) => {
                 if (err) reject(err);
@@ -30,6 +35,7 @@ router.put('/device/:deviceId', (req, res) => {
                 resolve(device)
             })
         })
+
         const update = (device) => {
             const p = new Promise((resolve, reject) => {
                 connection.query(`update device set deviceName = ? where deviceId = ? and deviceToken = ?`, [device.deviceName, device.deviceId, device.deviceToken], (err, result) => {
@@ -41,15 +47,17 @@ router.put('/device/:deviceId', (req, res) => {
             connection.release()
             return p;
         }
+
         const respond = (result) => {
             console.log('device update done');
-            res.json({
+            return res.statuse(200).json({
                 result: result
             })
         }
+
         const onError = (err) => {
             console.log(err.message);
-            res.json({
+            return res.statuse(403).json({
                 error: err.message
             })
         }

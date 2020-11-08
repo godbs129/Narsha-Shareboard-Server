@@ -45,13 +45,13 @@ router.post('/signup', (req, res) => {
             }
             const success = (message) => {
                 console.log(userId, '회원가입 성공');
-                res.json({
+                return res.statuse(200).json({
                     result: "1"
                 })
             }
             const onErr = (err) => {
                 console.log(userId, '회원가입 실패');
-                res.status(403).json({
+                return res.status(403).json({
                     result: '0'
                 })
             }
