@@ -1,5 +1,5 @@
 # Narsha-Shareboard-Server
-## 2020학년도 2학기 나르샤(1학년)
+## 2020년 2학기 나르샤(1학년)
 <br>
 
 Mobile | Window | Server
