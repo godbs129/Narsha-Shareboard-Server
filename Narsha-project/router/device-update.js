@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 
 router.put('/device/:deviceId', (req, res) => {
     const { deviceName, deviceToken } = req.body;
@@ -38,8 +38,7 @@ router.put('/device/:deviceId', (req, res) => {
 
         const update = (device) => {
             const p = new Promise((resolve, reject) => {
-                connection.query(`update device set deviceName = ? where deviceId = ? and deviceToken = ?`,
-                                 [device.deviceName, device.deviceId, device.deviceToken], (err, result) => {
+                connection.query(`update device set deviceName = ? where deviceId = ? and deviceToken = ?`, [device.deviceName, device.deviceId, device.deviceToken], (err, result) => {
                     if (err) reject(err);
                     console.log('deviceupdate', result);
                     resolve(1)

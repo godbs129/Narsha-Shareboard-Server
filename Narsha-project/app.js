@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const mysql = require('./dbcon');
+const mysql = require('./dbcon/dbcon');
 
 //Router
 const signup = require('./router/signup');
@@ -18,6 +18,6 @@ const clipboard_select = require('./router/clipboard-select');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update,
-        clipboard, clipboard_inquiry, clipboard_delete, clipboard-select);
+    clipboard, clipboard_inquiry, clipboard_delete, clipboard - select);
 
 module.exports = app;

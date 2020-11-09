@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 const jwt = require('jsonwebtoken');
 const secrit = "share board";
 
@@ -39,8 +39,7 @@ router.delete('/clipboard', (req, res) => {
 
         const boardselect = (clipboard) => {
             const p = new Promise((resolve, reject) => {
-                connection.query(`select c.boardId from clipboard as c join device as d where c.boardId = ? and d.userId = ?`,
-                 [clipboard.boardId, clipboard.userId], (err, result) => {
+                connection.query(`select c.boardId from clipboard as c join device as d where c.boardId = ? and d.userId = ?`, [clipboard.boardId, clipboard.userId], (err, result) => {
                     if (err) reject(err);
                     if (result.length == 0) reject(new Error("그런거 없어요"));
                     else {

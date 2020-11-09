@@ -3,7 +3,7 @@ const { resolve } = require('path');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const secret = "share board"
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 
 router.get('/clipboard', (req, res) => {
     pool.getConnection((err, connection) => {
@@ -28,14 +28,13 @@ router.get('/clipboard', (req, res) => {
 
         const select_clipboard = (userId) => {
             const p = new Promise((resolve, reject) => {
-                connection.query(`select c.boardId,c.board c.deviceId, c.date, d.deviceName, d.userId, d.typeId`+
-                                ` from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ?`,
-                 [userId], (err, result) => {
-                    if (err) reject(err);
-                    if (result.length == 0) reject(new Error("값이 없습니다"));
-                    console.log(result);
-                    resolve(result);
-                })
+                connection.query(`select c.boardId,c.board c.deviceId, c.date, d.deviceName, d.userId, d.typeId` +
+                    ` from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ?`, [userId], (err, result) => {
+                        if (err) reject(err);
+                        if (result.length == 0) reject(new Error("값이 없습니다"));
+                        console.log(result);
+                        resolve(result);
+                    })
             })
             return p
         }

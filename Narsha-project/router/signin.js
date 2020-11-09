@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const secrit = "share board"
-const pool = require('../dbcon')
+const pool = require('../dbcon/dbcon')
 
 router.post('/signin', (req, res) => {
     const { userId, password } = req.body;
@@ -28,12 +28,12 @@ router.post('/signin', (req, res) => {
         const authrize = (userId) => {
             console.log('user = ', userId)
             const p = new Promise((resolve, reject) => {
-                let extime = Math.floor(Date.now() / 1000) + (30*24*60 * 60)
+                let extime = Math.floor(Date.now() / 1000) + (30 * 24 * 60 * 60)
                 jwt.sign({
-                    sub: userId,
-                    iat: Math.floor(Date.now() / 1000),
-                    exp: extime
-                }, secrit,
+                        sub: userId,
+                        iat: Math.floor(Date.now() / 1000),
+                        exp: extime
+                    }, secrit,
                     (err, token) => {
                         if (err) reject(err)
                         resolve(token)
