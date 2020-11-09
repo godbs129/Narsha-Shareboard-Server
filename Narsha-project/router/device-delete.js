@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 const secret = "share board"
 
-router.delete('/device', function (req, res, next) {
+router.delete('/device', function(req, res, next) {
     pool.getConnection((err, connection) => {
 
         const deviceId = req.body.deviceId;
@@ -15,7 +15,7 @@ router.delete('/device', function (req, res, next) {
                 result: "0"
             })
         } else {
-            const token = req.headers.authorization// || req.query.token
+            const token = req.headers.authorization // || req.query.token
 
             if (!token) {
                 return res.status(403).json({
@@ -52,7 +52,7 @@ router.delete('/device', function (req, res, next) {
                 return p;
             }
 
-            const delete_device = (device)=>{
+            const delete_device = (device) => {
                 const p = new Promise((resolve, reject) => {
                     connection.query('delete from device where deviceId = ?', [device.deviceId], (err) => {
                         if (err) reject(err);
@@ -65,7 +65,7 @@ router.delete('/device', function (req, res, next) {
 
             const respond = (result) => {
                 return res.statuse(200).json({
-                    result:"1"
+                    result: "1"
                 });
             }
 

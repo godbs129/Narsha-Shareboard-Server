@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 const secret = "share board"
 
-router.get('/device', function (req, res, next) {
+router.get('/device', function(req, res, next) {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(err);
@@ -12,7 +12,7 @@ router.get('/device', function (req, res, next) {
                 result: "0"
             })
         } else {
-            const token = req.headers.authorization// || req.query.token
+            const token = req.headers.authorization // || req.query.token
 
             if (!token) {
                 return res.status(403).json({
@@ -39,8 +39,7 @@ router.get('/device', function (req, res, next) {
 
             const device = (userId) => {
                 const p = new Promise((resolve, reject) => {
-                    connection.query('select d.*, t.typeName from device as d inner join deviecType as t where userId = ?',
-                                     [userId], (err, result) => {
+                    connection.query('select d.*, t.typeName from device as d inner join deviecType as t where userId = ?', [userId], (err, result) => {
                         if (err) reject(err);
                         console.log(result);
                         if (result.length != 0) {

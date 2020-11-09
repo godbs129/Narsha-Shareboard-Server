@@ -2,7 +2,7 @@ const express = require('express');
 const { resolve } = require('path');
 const router = express.Router();
 const mysql = require('mysql');
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 
 router.post('/device', (req, res) => {
 
@@ -38,16 +38,15 @@ router.post('/device', (req, res) => {
 
             })*/
             const typeSelect = new Promise((resolve, reject) => {
-                    connection.query(`select * from deviceType where typeName = ?`, [device.typeName], (err, result) => {
-                        if (err) reject(err);
-                        if (result.length == 0) {
-                            reject(0);
-                        }
-                        else {
-                            resolve(result[0].typeId)
-                        }
-                    })
+                connection.query(`select * from deviceType where typeName = ?`, [device.typeName], (err, result) => {
+                    if (err) reject(err);
+                    if (result.length == 0) {
+                        reject(0);
+                    } else {
+                        resolve(result[0].typeId)
+                    }
                 })
+            })
 
             const select = (typeId) => {
                 const p = new Promise((resolve, reject) => {
@@ -69,8 +68,7 @@ router.post('/device', (req, res) => {
             const insert = (typeId) => {
                 console.log(typeId)
                 const p = new Promise((resolve, reject) => {
-                    connection.query(`INSERT into device (deviceName, deviceToken, userId, typeId) values (?,?,?,?)`,
-                                     [device.deviceName, device.deviceToken, device.userId, typeId], (err, result) => {
+                    connection.query(`INSERT into device (deviceName, deviceToken, userId, typeId) values (?,?,?,?)`, [device.deviceName, device.deviceToken, device.userId, typeId], (err, result) => {
                         if (err) reject(err);
                         console.log('aaa', result);
                         resolve(result.insertId);

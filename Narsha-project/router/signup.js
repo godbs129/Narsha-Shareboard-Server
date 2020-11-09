@@ -2,7 +2,7 @@ const express = require('express');
 const { resolve } = require('path');
 const router = express.Router();
 const mysql = require('mysql');
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 
 router.post('/signup', (req, res) => {
     console.log(req.body)
