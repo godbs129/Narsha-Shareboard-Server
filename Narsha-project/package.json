@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "git-open": "^2.1.0",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
