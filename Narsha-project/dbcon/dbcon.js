@@ -9,4 +9,4 @@ const con = mysql.createPool({
     dateStrings: 'date'
 });
 
-module.exports = con;np
+module.exports = con;
