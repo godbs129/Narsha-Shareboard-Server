@@ -15,6 +15,9 @@ const clipboard_inquiry = require('./router/clipboard-inquiry');
 const clipboard_delete = require('./router/clipboard-delete');
 const clipboard_select = require('./router/clipboard-select');
 
+app.set('view engine', 'pug');
+app.set('views', '/views');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update,
