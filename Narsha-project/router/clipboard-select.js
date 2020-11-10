@@ -35,7 +35,7 @@ router.get('/clipboard/:board', (req, res) => {
             const p = new Promise((resolve, reject) => {
                 connection.query(`select c.boardId, c.board, c.deviceId, c.date, d.deviceName, d.userId, d.typeId ` +
                     `from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ? and c.board like = ?`,
-                    [userId, '% ' + board + '%'], (err, result) => {
+                    [userId, "'%" + board + "%'"], (err, result) => {
                         if (err) {
                             console.log(err.message);
                             reject(err);
