@@ -52,7 +52,7 @@ router.post('/signin', (req, res) => {
         const onError = (err) => {
             console.log('signin Error')
             res.status(403).json({
-                result: 0
+                result: "0"
             })
         }
 
