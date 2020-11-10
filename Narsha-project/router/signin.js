@@ -36,7 +36,6 @@ router.post('/signin', (req, res) => {
                 }, secrit,
                     (err, token) => {
                         if (err) reject(err)
-                        console.log(token)
                         resolve(token)
                     })
             })

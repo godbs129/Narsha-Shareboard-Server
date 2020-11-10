@@ -4,7 +4,7 @@ const con = mysql.createPool({
     host: 'localhost',
     database: 'narsha',
     user: 'root',
-    password: 'jhy040129',
+    password: '12345',
     connectionLimit: 30,
     dateStrings: 'date'
 });
