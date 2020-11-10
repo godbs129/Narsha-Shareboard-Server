@@ -91,7 +91,7 @@ router.post('/device', (req, res) => {
 
             const success = (deviceId) => {
                 console.log(deviceId, '장치등록 성공');
-                return res.statuse(200).json({
+                return res.status(200).json({
                     result: "1",
                     deviceId: deviceId
                 });
