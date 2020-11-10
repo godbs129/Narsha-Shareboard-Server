@@ -58,7 +58,7 @@ router.post('/clipboard', (req, res) => {
                     connection.query(`insert into clipboard (deviceId, board, date) values (?,?,now())`, [clipboard.deviceId, clipboard.board, clipboard.date], (err, result) => {
                         if (err) reject(err);
                         console.log(result);
-                        resolve(result.insertBoard);
+                        resolve(result.insertId);
                     });
                     connection.release();
                 })
