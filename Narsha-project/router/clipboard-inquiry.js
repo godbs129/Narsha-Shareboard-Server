@@ -60,7 +60,7 @@ router.get('/clipboard', (req, res) => {
         }
 
         const onError = (err) => {
-            return res.status(403).json({
+            return res.status(400).json({
                 error: err.message
             })
         }

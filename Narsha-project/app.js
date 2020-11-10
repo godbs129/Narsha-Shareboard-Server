@@ -17,16 +17,18 @@ const clipboard_delete = require('./router/clipboard-delete');
 const clipboard_select = require('./router/clipboard-select');
 
 //Web Router
-const test = require('./router/web/web-signup');
+const test = require('./router/web/test');
+const manual = require('./router/web/manual');
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(__dirname + '/public'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update,
     clipboard, clipboard_inquiry, clipboard_delete, clipboard_select);
 
-app.use('/', test);
+app.use('/', manual, test);
 module.exports = app;
