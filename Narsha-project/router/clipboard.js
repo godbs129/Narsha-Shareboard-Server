@@ -66,7 +66,7 @@ router.post('/clipboard', (req, res) => {
             }
             const success = (boardId) => {
                 console.log(boardId, '클립보드 전송 성공');
-                return res.statuse(200).json({
+                return res.status(200).json({
                     result: "1",
                     boardId: boardId
                 })
