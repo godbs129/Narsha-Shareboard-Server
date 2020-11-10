@@ -68,7 +68,7 @@ router.post('/signup', (req, res) => {
 module.exports = router;*/
 const express = require('express');
 const router = express.Router();
-const pool = require('../dbcon');
+const pool = require('../dbcon/dbcon');
 
 router.post('/signup', (req, res) => {
     pool.getConnection((err, connection) => {

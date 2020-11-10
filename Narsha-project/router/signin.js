@@ -30,27 +30,28 @@ router.post('/signin', (req, res) => {
             const p = new Promise((resolve, reject) => {
                 let extime = Math.floor(Date.now() / 1000) + (30 * 24 * 60 * 60)
                 jwt.sign({
-                        sub: userId,
-                        iat: Math.floor(Date.now() / 1000),
-                        exp: extime
-                    }, secrit,
+                    sub: userId,
+                    iat: Math.floor(Date.now() / 1000),
+                    exp: extime
+                }, secrit,
                     (err, token) => {
                         if (err) reject(err)
+                        console.log(token)
                         resolve(token)
                     })
             })
-            return p
+            return p;
         }
         const response = (token) => {
             console.log('auth done');
-            return res.statuse(200).json({
+            res.status(200).json({
                 result: "1",
                 token
             })
         }
         const onError = (err) => {
             console.log('signin Error')
-            return res.status(403).json({
+            res.status(403).json({
                 result: 0
             })
         }

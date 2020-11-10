@@ -50,14 +50,14 @@ router.put('/device/:deviceId', (req, res) => {
 
         const respond = (result) => {
             console.log('device update done');
-            return res.statuse(200).json({
+            return res.status(200).json({
                 result: result
             })
         }
 
         const onError = (err) => {
             console.log(err.message);
-            return res.statuse(403).json({
+            return res.status(403).json({
                 error: err.message
             })
         }
