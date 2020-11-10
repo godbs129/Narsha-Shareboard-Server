@@ -31,7 +31,7 @@ router.post('/autologin', function (req, res, next) {
         .then(cheakSubjectAndPurpose)
         .then((decodedToken) => {
             req.decodedToken = decodedToken;
-            return res.statuse(200).json({
+            return res.status(200).json({
                 result: 1,
                 userId: req.decodedToken.sub
             })

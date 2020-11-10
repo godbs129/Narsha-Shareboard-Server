@@ -28,10 +28,11 @@ router.get('/clipboard', (req, res) => {
 
         const select_clipboard = (userId) => {
             const p = new Promise((resolve, reject) => {
-                connection.query(`select c.boardId,c.board, c.deviceId, c.date, d.deviceName, d.userId, d.typeId` +
-                    ` from clipboard as c join device as d on c.deviceId = d.deviceId where d.userId = ?`, [userId], (err, result) => {
+                connection.query(`select c.boardId,c.board, c.deviceId, c.date, d.deviceName, d.userId, t.typeName` +
+                    ` from clipboard as c join device as d on c.deviceId = d.deviceId join deviceType as t  on d.typeId = t.typeId where d.userId = ? order by(c.boardId) DESC`,
+                     [userId], (err, result) => {
                         if (err) reject(err);
-                        if (result.length == 0) reject(new Error("값이 없습니다"));
+                        //if (result.length == 0) reject(new Error("값이 없습니다"));
                         console.log(result);
                         resolve(result);
                     })
@@ -39,7 +40,7 @@ router.get('/clipboard', (req, res) => {
             return p
         }
 
-        const select_deviceType = (clipboard) => {
+        /*const select_deviceType = (clipboard) => {
             const p = new Promise((resolve, reject) => {
                 for (let i = 0; i < clipboard.length; i++) {
                     connection.query(`select deviceName from deviceType where typeId = ?`, [clipboard[i].typeId], (err, result) => {
@@ -51,16 +52,16 @@ router.get('/clipboard', (req, res) => {
             })
             connection.release()
             return p;
-        }
+        }*/
 
         const respond = (result) => {
-            return res.statuse(200).json({
+            return res.status(200).json({
                 result
             })
         }
 
         const onError = (err) => {
-            return res.status(403).json({
+            return res.status(400).json({
                 error: err.message
             })
         }
