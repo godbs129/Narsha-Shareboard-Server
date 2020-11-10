@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const mysql = require('./dbcon/dbcon');
 
 //Router
@@ -15,12 +16,16 @@ const clipboard_inquiry = require('./router/clipboard-inquiry');
 const clipboard_delete = require('./router/clipboard-delete');
 const clipboard_select = require('./router/clipboard-select');
 
-app.set('view engine', 'pug');
-app.set('views', '/views');
+//Web Router
+const test = require('./router/web/web-signup');
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update,
         clipboard, clipboard_inquiry, clipboard_delete, clipboard_select);
 
+app.use('/', test);
 module.exports = app;
