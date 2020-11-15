@@ -1,12 +1,12 @@
-$(function() {
+$(function () {
     let token = "";
-    $("#send").on("click", function() {
+    $("#signin").on("click", function () {
         $.ajax({
-                url: "/signin",
-                data: { userId: $('#userId').val(), password: $('#password').val() },
-                type: "POST",
-                dataType: "json"
-            })
+            url: "/signin",
+            data: { userId: $('#signIn_userId').val(), password: $('#signIn_pw').val() },
+            type: "POST",
+            dataType: "json"
+        })
             .done((data) => {
                 let obj = data;
                 token = obj.token;

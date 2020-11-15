@@ -5,9 +5,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"
+        integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/javascript/signin.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <script>
+        function login() {
+            if ($('#login').css('display') == 'none') {
+                $('#login').show();
+                $('#register').hide();
+                $('#SignIn').hide();
+                $('#SignUp').show();
+            } else {
+                $('#login').hide();
+                $('#register').show();
+
+            }
+        }
+        function register() {
+            if ($('#register').css('display') == 'none') {
+                $('#register').show();
+                $('#login').hide();
+                $('#SignIn').show();
+                $('#SignUp').hide();
+            } else {
+                $('#register').hide();
+                $('#login').show();
+            }
+        }
+    </script>
+
+    <style>
+        #register {
+            display: none;
+        }
+
+        #login {
+            display: none;
+        }
+    </style>
     <title>ShareBoard</title>
 </head>
 
@@ -24,8 +63,23 @@
             <h1 class="text-center">ShareBoard</h1>
             <p class="text-center">2020 DGSW Narsha</p>
             <p class="text-center">2020년 대소고 나르샤 <br> C편한세상</p>
-            <p class="text-center"><a class="btn btn-primary btn-lg" onclick="location.href='main'" target="_blank"
-                    role="button">Main Page</a>
+
+            <div class="signup" align=center id="register">
+                <input type="text" placeholder="ID" id="signUp_userId">
+                <input type="password" placeholder="password" id="signUp_pw">
+                <input type="button" value="회원가입" id="signup">
+            </div>
+
+            <div class="signin" align=center id="login">
+                <input type="text" placeholder="ID" id="signIn_userId">
+                <input type="password" placeholder="password" id="signIn_pw">
+                <input type="button" value="로그인" id="signin">
+            </div>
+
+            <div align=center>
+                <button id="SignUp" onclick="register()">SignUp</button>
+                <button id="SignIn" onclick="login()">SignIn</button>
+            </div>
             </p>
         </div>
         <hr>
