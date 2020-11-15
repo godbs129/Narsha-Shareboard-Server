@@ -21,12 +21,12 @@ const index = require('./router/web/index');
 const main = require('./router/web/main');
 const information = require('./router/web/information');
 const manual = require('./router/web/manual');
+const wsignin = require('./router/web/signin');
 
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(__dirname + '/public'));
 
 
 
@@ -35,5 +35,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update,
     clipboard, clipboard_inquiry, clipboard_delete, clipboard_select);
 
-app.use('/', index, main, manual, information);
+app.use('/', index, main, manual, information, wsignin);
 module.exports = app;

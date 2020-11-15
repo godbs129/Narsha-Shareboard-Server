@@ -1,9 +1,9 @@
 $(function() {
-    const token = "";
+    let token = "";
     $("#send").on("click", function() {
         $.ajax({
                 url: "/signin",
-                data: { userId: $('#userId'), password: $('#password') },
+                data: { userId: $('#userId').val(), password: $('#password').val() },
                 type: "POST",
                 dataType: "json"
             })
