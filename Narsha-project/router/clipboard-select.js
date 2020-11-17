@@ -5,9 +5,8 @@ const secret = "share board";
 const pool = require('../dbcon/dbcon');
 const auth = require('../middleware/auth');
 
-router.get('/clipboard/:board', auth, (req, res) => {
+router.get('/clipboard', auth, (req, res) => {
     pool.getConnection((err, connection) => {
-
         const board = req.params.board;
         const selectboard = (userId) => {
             const p = new Promise((resolve, reject) => {

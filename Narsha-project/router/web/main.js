@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
+const client = require('../../dbcon/dbcon');
 
-router.get('/main', auth, (req, res, next) => {
+router.get('/main', (req, res, next) => {
     res.render('main');
 });
 

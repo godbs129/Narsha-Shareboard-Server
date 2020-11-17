@@ -22,7 +22,7 @@ const clipboard_select = require('./router/clipboard-select');
 //Web Router
 const index = require('./router/web/index');
 const main = require('./router/web/main');
-const information = require('./router/web/information');
+const about = require('./router/web/about');
 const manual = require('./router/web/manual');
 
 
@@ -44,6 +44,6 @@ app.use(signup, signin, autologin, device, device_inquiry, device_delete, device
     clipboard, clipboard_inquiry, clipboard_delete, clipboard_select);
 
 //WEB Router
-app.use('/', index, main, manual, information);
+app.use('/', index, main, manual, about);
 
 module.exports = app;

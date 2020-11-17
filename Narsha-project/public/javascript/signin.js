@@ -11,6 +11,7 @@ $(function () {
                 let obj = data;
                 token = obj.token;
                 alert(token);
+                window.location.href = '/main'
             })
     })
 })
