@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
-const secrit = "share board"
+const secret = require('../secret/jwt.json').secret;
 const pool = require('../dbcon/dbcon')
 
 router.post('/signin', (req, res) => {
@@ -33,7 +33,7 @@ router.post('/signin', (req, res) => {
                     sub: userId,
                     iat: Math.floor(Date.now() / 1000),
                     exp: extime
-                }, secrit,
+                }, secret,
                     (err, token) => {
                         if (err) reject(err)
                         resolve(token)

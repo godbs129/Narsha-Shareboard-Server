@@ -2,8 +2,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mysql = require('./dbcon/dbcon');
+const session = require('express-session');
 
-//Router
+const secret = require('./secret/session.json').secret;
+
+//Restful API
 const signup = require('./router/signup');
 const signin = require('./router/signin');
 const autologin = require("./router/autoLogin");
@@ -27,12 +30,20 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: secret,
+    resave: false,
+    saveUninitialized: true
+}))
+
+// Restful API
 app.use(signup, signin, autologin, device, device_inquiry, device_delete, device_update,
     clipboard, clipboard_inquiry, clipboard_delete, clipboard_select);
 
+//WEB Router
 app.use('/', index, main, manual, information);
+
 module.exports = app;
