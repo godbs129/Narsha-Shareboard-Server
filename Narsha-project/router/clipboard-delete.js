@@ -3,8 +3,9 @@ const router = express.Router();
 const pool = require('../dbcon/dbcon');
 const jwt = require('jsonwebtoken');
 const secrit = "share board";
+const auth = require('../middleware/auth');
 
-router.delete('/clipboard', (req, res) => {
+router.delete('/clipboard', auth, (req, res) => {
     console.log('클립보드 삭제')
     pool.getConnection((err, connection) => {
         if (err) {
@@ -13,24 +14,8 @@ router.delete('/clipboard', (req, res) => {
             })
         }
 
-        const token = req.headers.authorization;
+
         const boardId = req.body.boardId;
-
-        if (!token) {
-            console.log("can`t found token");
-            res.json({
-                result: 0
-            })
-        }
-
-        const checktoken = new Promise((resolve, reject) => {
-            jwt.verify(token, secrit, (err, decodedToken) => {
-                if (err) reject(err);
-                console.log(decodedToken);
-                resolve(decodedToken);
-            })
-        })
-
         const cheaksubject = (decodedToken) => {
             const clipboard = { userId: decodedToken.sub, boardId: boardId };
             console.log("userId = ", clipboard.userId);

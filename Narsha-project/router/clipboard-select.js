@@ -2,35 +2,13 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const secret = "share board";
-const pool = require('../dbcon/dbcon')
+const pool = require('../dbcon/dbcon');
+const auth = require('../middleware/auth');
 
-router.get('/clipboard/:board', (req, res) => {
+router.get('/clipboard/:board', auth, (req, res) => {
     pool.getConnection((err, connection) => {
 
-        const token = req.headers.authorization;
         const board = req.params.board;
-
-        if (!token) {
-            console.log('No Token');
-            req.status(400).json({
-                result: "No token"
-            });
-        }
-
-        const checkToken = new Promise((resolve, request) => {
-            jwt.verify(token, secret, (err, decodedToken) => {
-                if (err) reject(err);
-                console.log(decodedToken);
-                resolve(decodedToken);
-            })
-        })
-
-        const checksubject = (decodedToken) => {
-            const userId = decodedToken.sub;
-            console.log(userId);
-            return userId;
-        }
-
         const selectboard = (userId) => {
             const p = new Promise((resolve, reject) => {
                 connection.query(`select c.boardId, c.board, c.deviceId, c.date, d.deviceName, d.userId, d.typeId ` +
@@ -61,9 +39,7 @@ router.get('/clipboard/:board', (req, res) => {
             })
         }
 
-        checkToken
-            .then(checksubject)
-            .then(selectboard)
+        selectboard(req.userId)
             .then(respond)
             .catch(onError)
     })

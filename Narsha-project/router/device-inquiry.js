@@ -3,8 +3,9 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const pool = require('../dbcon/dbcon');
 const secret = "share board"
+const auth = require('../middleware/auth');
 
-router.get('/device', function(req, res, next) {
+router.get('/device', auth, (req, res, next) => {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(err);
@@ -12,21 +13,6 @@ router.get('/device', function(req, res, next) {
                 result: "0"
             })
         } else {
-            const token = req.headers.authorization // || req.query.token
-
-            if (!token) {
-                return res.status(403).json({
-                    error: 'No Token'
-                })
-            }
-
-            const cheakToken = new Promise((resolve, reject) => {
-                jwt.verify(token, secret, (err, decondedToken) => {
-                    if (err) reject(err);
-                    console.log(decondedToken)
-                    resolve(decondedToken)
-                })
-            })
 
             cheakSubjectAndPurpose = (decodedToken) => {
                 const p = new Promise((resolve, reject) => {
