@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = require('../secret/jwt.json').secret;
 
 const authMiddleware = (req, res, next) => {
 
@@ -14,7 +15,7 @@ const authMiddleware = (req, res, next) => {
     // create a promise that decodes the token
     const checkToken = new Promise(
         (resolve, reject) => {
-            jwt.verify(token, req.app.get('jwt-secret'), (err, decodedToken) => {
+            jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
                 if (err) reject(err)
                 resolve(decodedToken)
             })
